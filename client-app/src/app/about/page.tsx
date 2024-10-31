@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Page(): React.ReactNode {
-  return (
-    <React.Fragment>테스트</React.Fragment>
-  );
+    return (
+        <React.Fragment>서비스 소개</React.Fragment>
+    );
 }
