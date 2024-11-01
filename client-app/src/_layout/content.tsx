@@ -1,21 +1,28 @@
 import React from 'react';
 
-export default function ContentBox({ children }: Readonly<{ children: React.ReactNode }>): React.ReactNode {
+import SubMenu from './submenu';
+import { SubMenuStructure } from '@/_include/menuStructures';
+
+export default function ContentBox({ children, submenuItems }: Readonly<{ children: React.ReactNode; submenuItems?: SubMenuStructure[] }>): React.ReactNode {
     return (
-        <div className="flex items-start mx-auto max-w-[1280px] bg-white p-6 m-4">
-            <div className="hidden lg:block 2xl:hidden text-sm w-[150px]">
-                <nav>
-                    <ul className="space-y-5">
-                        <li className="mb-4"><a href="#home">Home</a></li>
-                        <li className="mb-4"><a href="#about">About</a></li>
-                        <li className="mb-4"><a href="#services">Services</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
+        <>
+            <SubMenu submenuItems={submenuItems} />
+            <div className="flex items-start mx-auto max-w-[1280px] bg-white p-6 m-1">
+                {(Array.isArray(submenuItems) && submenuItems.length > 0) ? (
+                    <div className="hidden lg:block 2xl:hidden text-sm w-[171px]">
+                        <nav>
+                            <ul className="space-y-5">
+                                {submenuItems.map((item, index) => (
+                                    <li key={`submenu-${index}`} className="mb-4"><a href={item[1]}>{item[0]}</a></li>
+                                ))}
+                            </ul>
+                        </nav>
+                    </div>
+                ) : ''}
+                <div className="flex-1">
+                    {children}
+                </div>
             </div>
-            <div className="flex-1">
-                {children}
-            </div>
-        </div>
+        </>
     )
 }

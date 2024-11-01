@@ -13,9 +13,9 @@ import {
     NavbarMenuItem,
 } from '@nextui-org/react';
 
-import menuItems from '@/app/_menus';
+import { MainMenuStructure } from '@/_include/menuStructures';
 
-export default function NavigationBar(): React.ReactNode {
+export default function NavigationBar({ menuItems }: Readonly<{ menuItems: MainMenuStructure[] }>): React.ReactNode {
 
     return (
         <Navbar maxWidth="xl">

@@ -1,16 +1,21 @@
 import React from "react";
 
-export default function SubMenu(): React.ReactNode {
+import { SubMenuStructure } from "@/_include/menuStructures";
+
+export default function SubMenu({ submenuItems }: Readonly<{ submenuItems?: SubMenuStructure[] }>): React.ReactNode {
     return (
-        <div className="hidden 2xl:block absolute left-[calc(50%-880px)] top-32 max-w-[200px] w-full text-sm text-right">
-            <nav>
-                <ul className="space-y-5">
-                    <li className="mb-4"><a href="#home">Home</a></li>
-                    <li className="mb-4"><a href="#about">About</a></li>
-                    <li className="mb-4"><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
+        <>
+            {(Array.isArray(submenuItems) && submenuItems.length > 0) ? (
+                <div className="hidden 2xl:block absolute left-[calc(50%-880px)] top-24 max-w-[200px] w-full text-sm text-right">
+                    <nav>
+                        <ul className="space-y-5">
+                            {submenuItems.map((item, index) => (
+                                <li key={`submenu-${index}`} className="mb-4"><a href={item[1]}>{item[0]}</a></li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
+            ) : ''}
+        </>
     );
 }
