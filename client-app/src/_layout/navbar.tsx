@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import {
     Navbar,
     NavbarBrand,
@@ -15,6 +17,8 @@ import { MainMenu } from './menu';
 
 export default function NavigationBar(): React.ReactNode {
 
+    const router = useRouter();
+
     return (
         <Navbar maxWidth="xl">
             <NavbarContent className="!grow-0 mr-[35px]">
@@ -27,10 +31,10 @@ export default function NavigationBar(): React.ReactNode {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem className="lg:flex">
-                    <Link href="#">로그인</Link>
+                    <Link href="#" onClick={() => router.push('/user/signin')}>로그인</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} color="primary" href="#" variant="flat">
+                    <Button as={Link} color="primary" href="#" variant="flat" onClick={() => router.push('/user/signup')}>
                         계정등록
                     </Button>
                 </NavbarItem>
