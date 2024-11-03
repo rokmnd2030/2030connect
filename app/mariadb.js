@@ -7,8 +7,12 @@ const tables = ['users'];
 const schema = {
     users: `CREATE TABLE users (
                 sid INT AUTO_INCREMENT PRIMARY KEY,
-                uuid UUID NOT NULL,
+                uuid CHAR(36) UNIQUE NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) CHARACTER SET utf8 NOT NULL,
+                firstname VARCHAR(50) CHARACTER SET utf8 NOT NULL,
+                lastname VARCHAR(50) CHARACTER SET utf8 NOT NULL,
+                nickname VARCHAR(100) CHARACTER SET utf8 NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deleted_at TIMESTAMP

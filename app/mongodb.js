@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '.env.local' });
@@ -17,4 +17,10 @@ const init_mongodb = async () => {
     }
 }
 
-export { init_mongodb }
+const userSchema = new mongoose.Schema({
+    uuid: { type: String, required: true, unique: true }
+});
+
+const User = mongoose.model('users', userSchema);
+
+export { init_mongodb, User }
