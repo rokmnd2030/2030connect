@@ -77,9 +77,9 @@ export function MainMenu(): React.ReactNode {
 // 사이드 박스에 출력되는 서브메뉴 컴포넌트
 export function SubMenu(): [boolean, React.ReactNode] {
 
-    const [activeSubMenu, setActiveSubMenu] = useState('@');
-    const [activeMainMenu, setActiveMainMenu] = useState('@');
-    const [submenuItems, setSubMenuItems] = useState<menuStructure[]>([]);
+    const [activeSubMenu, setActiveSubMenu] = useState<string | undefined>('');
+    const [activeMainMenu, setActiveMainMenu] = useState<string | undefined>('');
+    const [subMenuItems, setSubMenuItems] = useState<menuStructure[]>([]);
 
     // 서브메뉴 라우터 기능 제공을 위한 hook
     const router = useRouter();
@@ -89,17 +89,17 @@ export function SubMenu(): [boolean, React.ReactNode] {
 
     // 콘텐츠가 로드되었을 때 한 번만 실행
     useEffect(() => {
+        // 현재 경로를 분해
         const menuIds = pathname.split('/');
 
+        // 서브메뉴 상태 초기화
+        setSubMenuItems([]);
+
         // 현재 경로 1단계 저장
-        if (typeof menuIds[1] == 'string' && menuIds[1].length > 0) {
-            setActiveMainMenu(menuIds[1]);
-        }
+        setActiveMainMenu(menuIds[1]);
 
         // 현재 경로 2단계 저장
-        if (typeof menuIds[2] == 'string' && menuIds[2].length > 0) {
-            setActiveSubMenu(menuIds[2]);
-        }
+        setActiveSubMenu(menuIds[2]);
 
         // 선택된 메인메뉴에 서브메뉴가 있다면 가져옴
         menuItems.map((item, index) => {
@@ -110,12 +110,12 @@ export function SubMenu(): [boolean, React.ReactNode] {
 
     }, [pathname]);
 
-    if (Array.isArray(submenuItems) && submenuItems.length > 0) {
+    if (subMenuItems.length > 0) {
 
         return [true, (
             <>
-                {submenuItems.map((item, index) => (
-                    <li key={`submenu-${index}`} className={item.id == activeSubMenu ? 'font-bold mb4' : 'mb4'}><Link color="foreground" href="#" onClick={() => router.push('/' + activeMainMenu + '/' + (item.id == '@' ? '' : item.id))}>{item.name}</Link></li>
+                {subMenuItems.map((item, index) => (
+                    <li key={`submenu-${index}`} className={item.id == activeSubMenu || (item.id == '@' && activeSubMenu === undefined) ? 'font-bold mb4' : 'mb4'}><Link color="foreground" href="#" onClick={() => router.push('/' + activeMainMenu + '/' + (item.id == '@' ? '' : item.id))}>{item.name}</Link></li >
                 ))}
             </>
         )]

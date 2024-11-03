@@ -8,8 +8,6 @@ export const metadata: Metadata = {
 
 export default function Page(): React.ReactNode {
     return (
-        <>
-            계정등록
-        </>
+        <>계정등록</>
     );
 }
