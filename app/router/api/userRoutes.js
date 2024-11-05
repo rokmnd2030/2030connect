@@ -63,4 +63,9 @@ router.post('/', async (req, res) => {
     res.status(status).json({ message: message });
 });
 
+// 로그인 (POST /api/users/auth/signin)
+router.get('/auth/signin', async (req, res) => {
+
+});
+
 export default router;

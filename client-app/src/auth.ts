@@ -1,26 +1,34 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { hashPassword } from "@/utils/password";
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
-            credentials: {
-                email: { label: 'Email', type: 'text' },
-                password: { lable: 'Password', type: 'password' },
-            },
-            authorize: async (credentials) => {
-
-                if (!credentials || !credentials.email || !credentials.password) {
-                    throw new Error('Missing credentials');
-                }
-
-                let user = null;
-
-                const pwHash = await hashPassword(credentials.password);
+            authorize: async credentials => {
+                const { email, password } = credentials;
+                let user = { email: '' }
 
                 return user;
-            },
-        })
+            }
+        }),
     ],
+    session: {
+        strategy: 'jwt',
+        maxAge: 60 * 60 * 24,
+    },
+    pages: {
+        signIn: '/user/signin',
+    },
+    callbacks: {
+        signIn: async () => {
+            return true;
+        },
+        jwt: async ({ token, user }) => {
+            return token;
+        },
+        session: async ({ session, token }) => {
+            return session;
+        }
+    },
+    debug: true,
 });
